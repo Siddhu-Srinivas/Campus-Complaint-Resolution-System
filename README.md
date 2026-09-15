@@ -1,6 +1,15 @@
 # Campus Resolve
 
-A simple Campus Complaint & Resolution System built with HTML, CSS, JavaScript, and Firebase Firestore.
+Campus Resolve is a simple Campus Complaint & Resolution System built with HTML, CSS, JavaScript, Firebase Authentication, and Cloud Firestore.
+
+## Features
+
+- Submit complaints with student, category, location, and description details.
+- View complaints with live status updates.
+- Search and filter by text, category, and status.
+- Admin login with edit, update, and delete tools.
+- Real-time Firebase Firestore storage.
+- Responsive layout with light and pure-black dark themes.
 
 ## Run locally
 
@@ -12,15 +21,15 @@ npx serve .
 
 Then open the URL shown in the terminal.
 
-## Connect Firebase
+## Firebase setup
 
-1. Create a Firebase project at https://console.firebase.google.com/.
-2. Create a Web App and copy its configuration object.
-3. Open `app.js` and replace the `YOUR_*` values in `firebaseConfig`.
-4. Create a Firestore database.
-5. Add a `complaints` collection. The app will create documents automatically when a complaint is submitted.
-6. In **Authentication → Sign-in method**, enable **Email/Password**.
-7. In **Authentication → Users**, click **Add user** and create the admin email and password.
+The app is configured for Firebase project `codingstudio-649b9` in `app.js`.
+
+1. Open https://console.firebase.google.com/.
+2. Create a Firestore database.
+3. Enable **Authentication → Sign-in method → Email/Password**.
+4. In **Authentication → Users**, create the admin account.
+5. The app creates the `complaints` collection after the first submission.
 
 For development, open **Firestore Database → Rules**, replace the rules with the following, and click **Publish**:
 
@@ -36,10 +45,27 @@ service cloud.firestore {
 }
 ```
 
-All visitors can read and submit complaints. Only signed-in Firebase users can update or delete complaints.
+All visitors can read and submit complaints. Only signed-in Firebase users can update or delete complaints. Use stricter admin roles or custom claims before production.
 
-For a prototype, the app runs in demo mode with sample complaints and persists changes in browser local storage until the Firebase configuration is added.
+## Admin login
 
-## Firestore security
+Use the **Admin login** button. The current UI recognizes `siddhu@gmail.com` as the admin account, so create that account in Firebase Authentication first.
 
-Before production, configure Firebase Authentication and Firestore Security Rules. The current interface intentionally keeps the admin dashboard simple for demonstration; it does not implement admin authentication.
+## Deploy
+
+```powershell
+firebase login
+firebase deploy --only hosting
+```
+
+Live app: https://codingstudio-649b9.web.app
+
+## Push updates to GitHub
+
+```powershell
+git add .
+git commit -m "Describe your change"
+git push origin main
+```
+
+Repository: https://github.com/Siddhu-Srinivas/Campus-Complaint-Resolution-System
