@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campus Complaint & Resolution System">
+  <title>Campus Resolve</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-pending">
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Campus Resolve home">
+        <span class="brand-mark">CR</span>
+        <span><strong>Campus</strong> Resolve</span>
+      </a>
+      <div class="topbar-meta">
+        <span class="connection-dot" id="connectionDot"></span>
+        <span id="connectionText">Connecting to Firestore...</span>
+        <button class="nav-button" id="adminLoginButton">Admin login</button>
+        <button class="icon-button" id="themeButton" title="Toggle theme" aria-label="Toggle theme">◐</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero-section student-only">
+        <div class="hero-copy">
+          <p class="eyebrow">Student support, made visible</p>
+          <h1>Make campus better,<br><em>one report at a time.</em></h1>
+          <p class="hero-text">Report an issue, follow its progress, and help your campus team close the loop.</p>
+          <a class="primary-button" href="#submit">Submit a complaint <span>↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-circle"></div>
+          <div class="art-card art-card-main"><span class="art-icon">✓</span><span><b>Issue resolved</b><small>Library · 2 min ago</small></span></div>
+          <div class="art-card art-card-small"><span class="art-number">24</span><span><b>this month</b><small>reports closed</small></span></div>
+          <div class="art-line"></div>
+        </div>
+      </section>
+
+      <section class="stats-row student-only" aria-label="Complaint summary">
+        <div class="stat"><span class="stat-icon blue">◌</span><div><strong id="totalCount">0</strong><span>Total complaints</span></div></div>
+        <div class="stat"><span class="stat-icon orange">◷</span><div><strong id="pendingCount">0</strong><span>Awaiting action</span></div></div>
+        <div class="stat"><span class="stat-icon green">✓</span><div><strong id="resolvedCount">0</strong><span>Resolved</span></div></div>
+        <div class="stat stat-note"><span class="pulse"></span><div><strong>24 hr</strong><span>Average first response</span></div></div>
+      </section>
+
+      <section class="workspace-grid student-only">
+        <div class="panel form-panel" id="submit">
+          <div class="section-heading"><div><p class="eyebrow">New report</p><h2>Tell us what happened</h2></div><span class="step-label">01 / 01</span></div>
+          <form id="complaintForm">
+            <div class="field-row">
+              <label>Full name<input name="name" type="text" placeholder="e.g. Alex Morgan" required></label>
+              <label>Student ID<input name="studentId" type="text" placeholder="e.g. STU-2048" required></label>
+            </div>
+            <label>Email address<input name="email" type="email" placeholder="you@campus.edu" required></label>
+            <div class="field-row">
+              <label>Category<select name="category" required><option value="">Choose a category</option><option>Facilities</option><option>Academics</option><option>Safety</option><option>Technology</option><option>Hostel</option><option>Transport</option><option>Other</option></select></label>
+              <label>Location<input name="location" type="text" placeholder="e.g. North Library" required></label>
+            </div>
+            <label>Subject<input name="subject" type="text" placeholder="Give your complaint a short title" required></label>
+            <label>What would you like us to know?<textarea name="description" rows="4" placeholder="Include any useful details, dates, or context..." required></textarea></label>
+            <div class="form-footer"><span class="privacy-note">Your information is only shared with the resolution team.</span><button class="primary-button" type="submit" id="submitButton">Send complaint <span>→</span></button></div>
+          </form>
+        </div>
+
+        <div class="panel complaints-panel" id="complaints">
+          <div class="section-heading"><div><p class="eyebrow">Live queue</p><h2>Complaint tracker</h2></div><span class="live-label"><span class="pulse"></span> Live</span></div>
+          <div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search complaints..."></div><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option value="Submitted">Submitted</option><option value="In progress">In progress</option><option value="Resolved">Resolved</option></select></div>
+          <div class="category-filters" id="categoryFilters"><button class="filter-chip active" data-category="all">All</button><button class="filter-chip" data-category="Facilities">Facilities</button><button class="filter-chip" data-category="Academics">Academics</button><button class="filter-chip" data-category="Technology">Technology</button><button class="filter-chip" data-category="Safety">Safety</button></div>
+          <div class="complaint-list" id="complaintList"><div class="empty-state">Loading complaints...</div></div>
+        </div>
+      </section>
+
+      <section class="admin-section" id="admin" hidden>
+        <div class="admin-header"><div><p class="eyebrow">Staff workspace</p><h2>Admin dashboard</h2><p>Manage the queue, update statuses, and keep students informed.</p></div><button class="secondary-button" id="adminToggle">Open admin tools <span>→</span></button></div>
+        <div class="admin-tools" id="adminTools" hidden>
+          <div class="admin-toolbar"><div><strong id="adminCount">0</strong> complaints in queue</div><select id="adminStatusFilter" aria-label="Admin status filter"><option value="all">Every status</option><option value="Submitted">Submitted</option><option value="In progress">In progress</option><option value="Resolved">Resolved</option></select></div>
+          <div class="admin-table-wrap"><table><thead><tr><th>Complaint</th><th>Category</th><th>Submitted by</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminTableBody"></tbody></table></div>
+        </div>
+      </section>
+    </main>
+    <footer id="siteFooter" class="student-only"><span>Campus Resolve</span><span>Built for a more responsive campus</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <dialog id="loginDialog"><form method="dialog" id="loginForm"><div class="dialog-header"><div><p class="eyebrow">Staff access</p><h2>Admin login</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div><p class="login-help">Use the admin account created in Firebase Authentication.</p><label>Email address<input name="email" type="email" placeholder="admin@campus.edu" required></label><label>Password<input name="password" type="password" placeholder="Your password" required></label><div class="dialog-actions"><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" type="submit" id="loginButton">Log in <span>→</span></button></div></form></dialog>
+  <dialog id="editDialog"><form method="dialog" id="editForm"><div class="dialog-header"><div><p class="eyebrow">Admin edit</p><h2>Update complaint</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div><input type="hidden" name="id"><label>Subject<input name="subject" required></label><label>Status<select name="status"><option>Submitted</option><option>In progress</option><option>Resolved</option></select></label><label>Admin note<textarea name="adminNote" rows="4" placeholder="Optional note for the resolution team"></textarea></label><div class="dialog-actions"><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" value="default">Save changes</button></div></form></dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
