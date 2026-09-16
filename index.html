@@ -66,13 +66,13 @@
             <div class="form-footer"><span class="privacy-note">Your information is only shared with the resolution team.</span><button class="primary-button" type="submit" id="submitButton">Send complaint <span>→</span></button></div>
           </form>
         </div>
+      </section>
 
-        <div class="panel complaints-panel" id="complaints">
-          <div class="section-heading"><div><p class="eyebrow">Live queue</p><h2>Complaint tracker</h2></div><span class="live-label"><span class="pulse"></span> Live</span></div>
-          <div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search complaints..."></div><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option value="Submitted">Submitted</option><option value="In progress">In progress</option><option value="Resolved">Resolved</option></select></div>
-          <div class="category-filters" id="categoryFilters"><button class="filter-chip active" data-category="all">All</button><button class="filter-chip" data-category="Facilities">Facilities</button><button class="filter-chip" data-category="Academics">Academics</button><button class="filter-chip" data-category="Technology">Technology</button><button class="filter-chip" data-category="Safety">Safety</button></div>
-          <div class="complaint-list" id="complaintList"><div class="empty-state">Loading complaints...</div></div>
-        </div>
+      <section class="panel complaints-panel admin-only" id="complaints" hidden>
+        <div class="section-heading"><div><p class="eyebrow">Live queue</p><h2>Complaint tracker</h2></div><span class="live-label"><span class="pulse"></span> Live</span></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search complaints..."></div><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option value="Submitted">Submitted</option><option value="In progress">In progress</option><option value="Resolved">Resolved</option></select></div>
+        <div class="category-filters" id="categoryFilters"><button class="filter-chip active" data-category="all">All</button><button class="filter-chip" data-category="Facilities">Facilities</button><button class="filter-chip" data-category="Academics">Academics</button><button class="filter-chip" data-category="Technology">Technology</button><button class="filter-chip" data-category="Safety">Safety</button></div>
+        <div class="complaint-list" id="complaintList"><div class="empty-state">Loading complaints...</div></div>
       </section>
 
       <section class="admin-section" id="admin" hidden>

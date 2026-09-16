@@ -44,14 +44,17 @@ function setConnection(connected, text) {
 function setAdminSession(user) {
   document.body.classList.remove("auth-pending");
   const dashboard = $("#admin");
+  const liveQueue = $("#complaints");
   const loginButton = $("#adminLoginButton");
   const admin = user?.email?.toLowerCase() === adminEmail;
   document.querySelectorAll(".student-only").forEach((section) => { section.hidden = admin; });
+  document.querySelectorAll(".admin-only").forEach((section) => { section.hidden = !admin; });
   dashboard.hidden = !admin;
+  liveQueue.hidden = !admin;
   loginButton.textContent = admin ? "Log out" : "Admin login";
   $("#adminTools").hidden = !admin;
   $("#adminToggle").hidden = admin;
-  if (admin) { renderAdminTable(); dashboard.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  if (admin) { render(); dashboard.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 
 function timestampValue(item) {
